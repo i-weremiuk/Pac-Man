@@ -1,8 +1,9 @@
 class Game{
 	public:
+		enum Gamestate {Gameplay, Menu, Pause, Gameover}
 		void run();
 	private:
-		void getInput();
+		void handleEvents();
 		void update(sf::Time dt);
 		void render();
 
