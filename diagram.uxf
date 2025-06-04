@@ -1,0 +1,107 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Player
+
+--
+(— w minimalnym szkielecie brak metod publicznych —)
+--
+(— brak metod protected/private —)
+--
+(— brak atrybutów —)
+</help_text><element><id>UMLClass</id><coordinates><x>510</x><y>40</y><w>260</w><h>220</h></coordinates><panel_attributes>Game
+
+--
++ run() : void
+--
+- handleEvents() : void
+- update(dt : sf::Time) : void
+- render() : void
+--
+- window : sf::RenderWindow
+- map    : Map
+- player : Player
+- ghosts : std::vector&lt;Ghost&gt;
+- state  : GameState</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>10</y><w>300</w><h>210</h></coordinates><panel_attributes>Entity
+
+--
++ update(dt : sf::Time) : void
++ draw(window : sf::RenderWindow&amp;) : void
++ getPosition() : sf::Vector2f
++ setPosition(pos : sf::Vector2f) : void
+--
+(— żadnych dodatkowych metod protected/private w tym minimalnym szkielecie —)
+--
+- sprite   : sf::Sprite
+- velocity : sf::Vector2f
+- position : sf::Vector2f
+- speed    : float
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>950</x><y>750</y><w>210</w><h>190</h></coordinates><panel_attributes>Inky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
+--
+(— brak dodatkowych metod protected/private —)
+--
+(— brak własnych atrybutów —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>490</x><y>330</y><w>270</w><h>240</h></coordinates><panel_attributes>Ghost
+
+--
++ Ghost(startPosition : sf::Vector2i)
++ update(dt : sf::Time) : void
++ setMode(m : Mode) : void
++ getMode() : Mode
+--
+- mode : Mode
+- moveOnGrid(map : Map) : void
+- chooseTarget(map : Map, p : Player) : sf::Vector2i  {abstract}
+--
+(— brak atrybutów prywatnych w tym minimalnym szkielecie —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>760</y><w>210</w><h>190</h></coordinates><panel_attributes>Pinky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
+--
+(— brak dodatkowych metod protected/private —)
+--
+(— brak własnych atrybutów —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>370</x><y>760</y><w>210</w><h>190</h></coordinates><panel_attributes>Blinky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
+--
+(— brak dodatkowych metod protected/private —)
+--
+(— brak własnych atrybutów —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>0</y><w>400</w><h>290</h></coordinates><panel_attributes>Map
+
+--
++ draw(window : sf::RenderWindow&amp;) : void
++ load(filename : std::string) : bool
++ isWall(gridPos : sf::Vector2i) : bool
++ isIntersection(gridPos : sf::Vector2i) : bool
++ getPossibleDirections(gridPos : sf::Vector2i) : std::vector&lt;sf::Vector2i&gt;
++ getCoinCount() : int
+--
+(— brak metod protected/private —)
+--
+- layout      : std::vector&lt;std::string&gt;
+- walls       : std::set&lt;sf::Vector2i&gt;
+- coins       : std::set&lt;sf::Vector2i&gt;
+- boosts      : std::set&lt;sf::Vector2i&gt;
+- wallTexture : sf::Texture
+- coinTexture : sf::Texture
+- boostTexture: sf::Texture
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>340</y><w>270</w><h>220</h></coordinates><panel_attributes>Player ←
+
+--
++ update(dt : sf::Time) : void
++ handleInput(key : sf::Keyboard::Key) : void
++ getLives() : int  {const}
++ getScore() : int  {const}
++ setLives() : void
++ setScore() : void
++ die() : void
+--
+--  (brak metod chronionych/prywatnych)
+--
+- lives : int
+- score : int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>990</x><y>210</y><w>30</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>580</x><y>210</y><w>350</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>330;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>560</y><w>460</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;440;190</additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>560</y><w>190</w><h>220</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;170;200</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>250</y><w>490</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>470;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>250</y><w>90</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>560</y><w>140</w><h>220</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>890</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>210</y><w>80</w><h>270</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;60;250</additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>420</y><w>170</w><h>60</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>160</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element></diagram>
