@@ -9,5 +9,3 @@ Entity::Entity(sf::RectangleShape body, sf::Vector2f position)
 void Entity::draw(sf::RenderWindow& window){
 	window.draw(body);
 }
-
-	

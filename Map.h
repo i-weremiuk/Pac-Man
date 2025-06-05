@@ -8,14 +8,19 @@ class Map{
 		bool isWall(const sf::Vector2i& gridPosition) const;
 		bool isIntersection(const sf::Vector2i& gridPosition) const;
 		std::vector<sf::Vector2i> getPossibleDirections(const sf::Vector2i& gridPosition) const;
-		static bool isCentered(sf::Vector2f start_posiiton, sf::Vector2f position);
+		static bool isCentered(sf::Vector2f position);
+		static bool checkPath(sf::Vector2f position, sf::Vector2i turn);
+		static std::vector<sf::Vector2i> getFreePaths(sf::Vector2f position);
 		static sf::Vector2f centerVertically(sf::Vector2f position);
 		static sf::Vector2f centerHorizontally(sf::Vector2f position);
+		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
+		static sf::Vector2i getCurrTile(sf::Vector2f position);
+		static Tile getTile(sf::Vector2i position);
 
 		int getCoinCount() const;
 	protected:
 		void loadMap(std::string layout[25]);
-		static sf::Vector2f tileSize;
+		static float tileSize;
 		std::string layout[25] =
 	 {"############O############",
 		"#OOOOOOOOOO#O#OOOOOOOOOO#",
@@ -43,7 +48,7 @@ class Map{
 		"#OOOOOOOOOOOOOOOOOOOOOOO#",
 		"############O############",
 		};
-		Tile tiles[25][25];
+		static Tile tiles[25][25];
 		std::vector<sf::Vector2f> coins;
 		std::vector<sf::Vector2f> boosts;
 		sf::Texture wallTexture;
