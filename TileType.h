@@ -1,0 +1,1 @@
+enum tileType{Wall, Path};

@@ -1,13 +1,17 @@
+#include <SFML/Graphics.hpp>
 class Entity{
 	public:
+		Entity(sf::RectangleShape body, sf::Vector2f position);
 		virtual void update(sf::Time dt) = 0;
-		virtual void draw(sf::RenderWindow& window);
+		void draw(sf::RenderWindow& window);
 		sf::Vector2f getPosition() const;
-		void setPosition(const sf::Vector2f&);
 		
 	protected:
-		sf::Sprite sprite;
+		sf::RectangleShape body;
 		sf::Vector2f velocity;
 		sf::Vector2f position;
-		float speed;
+		sf::Vector2f startPosition;
+		sf::Vector2f nextTurn;
+		bool turnQueued;
+		float speed = 70.0f;
 };

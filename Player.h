@@ -1,7 +1,11 @@
+#include <SFML/Graphics.hpp>
+#include "Entity.h"
+
 class Player : public Entity{
 	public:
+		Player(sf::RectangleShape body, sf::Vector2f position);
 		void update(sf::Time dt) override;
-		void handleInput(const sf::Keyboard::Key&);
+		void handleInput(sf::Keyboard::Key&);
 		int getLives() const;
 		int getScore() const;
 		void setLives();
@@ -11,4 +15,4 @@ class Player : public Entity{
 	private:
 		int lives;
 		int score;
-}
+};
