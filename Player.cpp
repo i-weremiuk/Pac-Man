@@ -12,27 +12,20 @@ Player::Player(sf::RectangleShape body, sf::Vector2f position)
 			}
 
 void Player::update(sf::Time dt){
+	if(turnQueued){
+		if(Map::isParalell(Map::getCurrDirection(velocity), nextTurn)){
+			turn(nextTurn);
+		}else if(Map::isCentered(position) && Map::checkPath(position, nextTurn)){
+			turn(nextTurn);
+		}
+	}
+
 	if(Map::isCentered(position)){
-			bool isPathClear;
-			if(turnQueued){					
-				isPathClear = Map::checkPath(position, nextTurn);
-				if(isPathClear){
-					velocity = {nextTurn.x * speed, nextTurn.y * speed};
-					turnQueued = false;
-				}
-			}
-			sf::Vector2i currDirection = Map::getCurrDirection(velocity); 
-			isPathClear = Map::checkPath(position, currDirection);
-			if(!isPathClear){
-				std::vector<sf::Vector2i> freePaths = Map::getFreePaths(position);
-				std::cerr<<"kilkawolne\n";
-				for(sf::Vector2i path : freePaths){
-						nextTurn = path;
-				}
-							std::cerr<<currDirection.x<<" "<<currDirection.y<<"\n";
-							std::cerr<<nextTurn.x<<" "<<nextTurn.y<<"\n\n";
-				velocity = {nextTurn.x * speed, nextTurn.y * speed};
-			}
+		if(!Map::checkPath(position, Map::getCurrDirection(velocity))){
+			std::vector<sf::Vector2i> freePaths = Map::getFreePaths(position);
+			nextTurn = freePaths[0];
+			turn(nextTurn);
+		}
 	}
 
 	position += dt.asSeconds() * velocity;

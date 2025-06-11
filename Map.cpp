@@ -63,7 +63,13 @@ bool Map::checkPath(sf::Vector2f position, sf::Vector2i turn){
 	}
 	return false;
 }
-
+bool Map::isParalell(sf::Vector2i v1, sf::Vector2i v2){
+	if(v1 == v2 || v1 == v2*-1){
+		return true;
+	}
+	return false;
+}
+		
 std::vector<sf::Vector2i> Map::getFreePaths(sf::Vector2f position){
 	sf::Vector2i currTile = getCurrTile(position);
 	std::vector<sf::Vector2i> freePaths;
@@ -114,17 +120,4 @@ bool Map::isCentered(sf::Vector2f position){
 		return false;
 	}
 }
-/*
-	float eps = 0.1f;
-	float dx = std::abs(position.x - start_position.x);
-	float dy = std::abs(position.y - start_position.y);
-	float mx = std::fmod(dx, tileSize);
-	float my = std::fmod(dy, tileSize);
-	if((mx < eps || std::abs(mx - tileSize) < eps) &&
-		(my < eps || std::abs(my - tileSize) < eps)){
-		return true;
-	}
-	return false;
-}
-*/
 

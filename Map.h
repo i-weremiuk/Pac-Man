@@ -10,9 +10,8 @@ class Map{
 		std::vector<sf::Vector2i> getPossibleDirections(const sf::Vector2i& gridPosition) const;
 		static bool isCentered(sf::Vector2f position);
 		static bool checkPath(sf::Vector2f position, sf::Vector2i turn);
+		static bool isParalell(sf::Vector2i v1, sf::Vector2i v2);
 		static std::vector<sf::Vector2i> getFreePaths(sf::Vector2f position);
-		static sf::Vector2f centerVertically(sf::Vector2f position);
-		static sf::Vector2f centerHorizontally(sf::Vector2f position);
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
 		static sf::Vector2i getCurrTile(sf::Vector2f position);
 		static Tile getTile(sf::Vector2i position);
@@ -34,7 +33,7 @@ class Map{
 		"#OOOOOO#O#O#O#O#O#OOOOOO#",
 		"######O#OOO#O#OOO#O######",
 		"######OOO###O###OOO######",
-		"OOOOOOO#O##OOO##O#OOOOOOO",
+		"OOOOOOO#O#OOOOO#O#OOOOOOO",
 		"######O#O#######O#O######",
 		"######O#OOOOOOOOO#O######",
 		"#OOOOOOOO###O###OOOOOOOO#",

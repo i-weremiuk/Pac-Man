@@ -8,6 +8,7 @@ class Entity{
 		sf::Vector2f getBaseVector();
 		
 	protected:
+		void turn(sf::Vector2i turnVector);
 		sf::RectangleShape body;
 		sf::Vector2f velocity;
 		sf::Vector2f baseVector;
