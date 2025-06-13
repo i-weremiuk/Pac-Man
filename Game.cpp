@@ -9,6 +9,7 @@ void Game::run(){
 		while(window.pollEvent(event)){
 				handleEvents(event);
 		}
+
 		sf::Time dt = clock.restart();
 
 		update(dt);
@@ -36,9 +37,12 @@ void Game::handleEvents(sf::Event event){
 void Game::render(){
 	map.draw(window);
 	player.draw(window);
+	blinky.draw(window);
 }
 
 void Game::update(sf::Time time){
-	player.update(time);
+	sf::Vector2f playerPos = player.getPosition();
+	player.update(time, playerPos);
+	blinky.update(time, playerPos);
 }
 

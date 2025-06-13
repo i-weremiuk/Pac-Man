@@ -1,8 +1,7 @@
+#pragma once
+#include "Ghost.h"
 class Blinky : public Ghost{
-	protected:
-		sf::Vector2i chooseTarget(const Map& map, const Player& p) override{
-			// scatter - prawy górny róg
-			// chase - celuje w pacmana
-			// flee - losowo
-		}
-}
+	public:
+		Blinky(sf::RectangleShape body, sf::Vector2f position);
+		sf::Vector2i chooseTargetTile(sf::Vector2f playerPosition) override;
+};

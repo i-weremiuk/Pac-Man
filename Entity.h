@@ -1,10 +1,11 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 class Entity{
 	public:
 		Entity(sf::RectangleShape body, sf::Vector2f position);
-		virtual void update(sf::Time dt) = 0;
+		virtual void update(sf::Time dt, sf::Vector2f playerPosition) = 0;
 		void draw(sf::RenderWindow& window);
-		sf::Vector2f getPosition() const;
+		sf::Vector2f getPosition();	
 		sf::Vector2f getBaseVector();
 		
 	protected:

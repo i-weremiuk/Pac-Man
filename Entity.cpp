@@ -14,3 +14,7 @@ void Entity::turn(sf::Vector2i turnVector){
 void Entity::draw(sf::RenderWindow& window){
 	window.draw(body);
 }
+
+sf::Vector2f Entity::getPosition(){
+	return position;
+}

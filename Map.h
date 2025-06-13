@@ -11,15 +11,19 @@ class Map{
 		static bool isCentered(sf::Vector2f position);
 		static bool checkPath(sf::Vector2f position, sf::Vector2i turn);
 		static bool isParalell(sf::Vector2i v1, sf::Vector2i v2);
+		static bool isLeavingMap(sf::Vector2f pos);
 		static std::vector<sf::Vector2i> getFreePaths(sf::Vector2f position);
+		static sf::Vector2i castToBaseVector(sf::Vector2f v);
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
 		static sf::Vector2i getCurrTile(sf::Vector2f position);
+		static sf::Vector2f castToPosition(sf::Vector2i tilePosition);
 		static Tile getTile(sf::Vector2i position);
 
 		int getCoinCount() const;
 	protected:
 		void loadMap(std::string layout[25]);
 		static float tileSize;
+		static float tileCenterOffset;
 		std::string layout[25] =
 	 {"############O############",
 		"#OOOOOOOOOO#O#OOOOOOOOOO#",
@@ -48,6 +52,7 @@ class Map{
 		"############O############",
 		};
 		static Tile tiles[25][25];
+		static int mapSize;
 		std::vector<sf::Vector2f> coins;
 		std::vector<sf::Vector2f> boosts;
 		sf::Texture wallTexture;
