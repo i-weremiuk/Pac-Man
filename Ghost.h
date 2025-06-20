@@ -13,6 +13,6 @@ class Ghost : public Entity{
 
 	protected:
 		Mode mode;
-		virtual sf::Vector2i chooseTargetTile(sf::Vector2f playerPosition) = 0;
+		virtual sf::Vector2i chooseTargetGridPosition(sf::Vector2f playerPosition) = 0;
 		sf::Vector2i getNextTurn(sf::Vector2i targetTile);
 };

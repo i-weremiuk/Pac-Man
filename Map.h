@@ -15,7 +15,7 @@ class Map{
 		static std::vector<sf::Vector2i> getFreePaths(sf::Vector2f position);
 		static sf::Vector2i castToBaseVector(sf::Vector2f v);
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
-		static sf::Vector2i getCurrTile(sf::Vector2f position);
+		static sf::Vector2i getGridPosition(sf::Vector2f position);
 		static sf::Vector2f castToPosition(sf::Vector2i tilePosition);
 		static Tile getTile(sf::Vector2i position);
 

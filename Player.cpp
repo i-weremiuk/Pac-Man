@@ -12,7 +12,7 @@ Player::Player(sf::RectangleShape body, sf::Vector2f position)
 			}
 
 void Player::teleportIfReady(){
-	sf::Vector2i currTile = Map::getCurrTile(position);
+	sf::Vector2i currTile = Map::getGridPosition(position);
 	if(Map::isCentered(position)){
 		if(currTile == sf::Vector2i{-1,12}){
 			position = Map::castToPosition(sf::Vector2i{25, 12});
@@ -64,7 +64,7 @@ void Player::update(sf::Time dt, sf::Vector2f playerPos){
 		}
 	}
 
-	std::cout<<position.x<<" "<<position.y<<" "<<Map::getCurrTile(position).x<<" "<<Map::getCurrTile(position).y<<"\n";
+	std::cout<<position.x<<" "<<position.y<<" "<<Map::getGridPosition(position).x<<" "<<Map::getGridPosition(position).y<<"\n";
 
 	position += dt.asSeconds() * velocity;
 	body.setPosition(position);

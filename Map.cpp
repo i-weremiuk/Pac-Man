@@ -42,7 +42,7 @@ void Map::draw(sf::RenderWindow& window){
 	}
 }
 
-sf::Vector2i Map::getCurrTile(sf::Vector2f position){
+sf::Vector2i Map::getGridPosition(sf::Vector2f position){
 	int x = (int)(std::floor(position.x / tileSize));
 	int y = (int)(std::floor(position.y / tileSize));
 	return sf::Vector2i(x,y);
@@ -70,12 +70,12 @@ bool Map::isLeavingMap(sf::Vector2f position){
 
 bool Map::checkPath(sf::Vector2f position, sf::Vector2i turn){
 
-	sf::Vector2i currTile = getCurrTile(position);
-	currTile += turn;
+	sf::Vector2i currGridPosition = getGridPosition(position);
+	currGridPosition += turn;
 
-	if(getTile(currTile).getType() == Wall){
+	if(getTile(currGridPosition).getType() == Wall){
 		return false;
-	}else if(getTile(currTile).getType() == Path){
+	}else if(getTile(currGridPosition).getType() == Path){
 		return true;
 	}
 	return false;
@@ -88,7 +88,7 @@ bool Map::isParalell(sf::Vector2i v1, sf::Vector2i v2){
 }
 		
 std::vector<sf::Vector2i> Map::getFreePaths(sf::Vector2f position){
-	sf::Vector2i currTile = getCurrTile(position);
+	sf::Vector2i currTile = getGridPosition(position);
 	std::vector<sf::Vector2i> freePaths;
 
 	if(getTile(currTile + sf::Vector2i(0, -1)).getType() == Path){
@@ -131,7 +131,7 @@ sf::Vector2i Map::getCurrDirection(sf::Vector2f velocity){
 }
 
 bool Map::isCentered(sf::Vector2f position){
-	sf::Vector2i currTile = getCurrTile(position);	
+	sf::Vector2i currTile = getGridPosition(position);	
 	sf::Vector2f tileCenter((currTile.x + 0.5f) * tileSize, (currTile.y + 0.5f) * tileSize);
 	float eps = 1.f;
 	if(std::abs(position.x - tileCenter.x) < eps && std::abs(position.y - tileCenter.y) < eps){

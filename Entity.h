@@ -18,4 +18,5 @@ class Entity{
 		sf::Vector2i nextTurn;
 		bool turnQueued;
 		float speed = 200.0f; 
+		static sf::Vector2i rightTurn;
 };

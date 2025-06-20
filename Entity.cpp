@@ -18,3 +18,5 @@ void Entity::draw(sf::RenderWindow& window){
 sf::Vector2f Entity::getPosition(){
 	return position;
 }
+
+sf::Vector2i Entity::rightTurn = sf::Vector2i(1,0);
