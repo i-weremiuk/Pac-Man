@@ -88,23 +88,23 @@ bool Map::isParalell(sf::Vector2i v1, sf::Vector2i v2){
 }
 		
 std::vector<sf::Vector2i> Map::getFreePaths(sf::Vector2f position){
-	sf::Vector2i currTile = getGridPosition(position);
-	std::vector<sf::Vector2i> freePaths;
-
-	if(getTile(currTile + sf::Vector2i(0, -1)).getType() == Path){
-		freePaths.push_back(sf::Vector2i(0, -1));
-	}
-	if(getTile(currTile + sf::Vector2i(0, 1)).getType() == Path){
-		freePaths.push_back(sf::Vector2i(0, 1));
-	}
-	if(getTile(currTile + sf::Vector2i(1, 0)).getType() == Path){
-		freePaths.push_back(sf::Vector2i(1,0));
-	}
-	if(getTile(currTile + sf::Vector2i(-1, 0)).getType() == Path){
-		freePaths.push_back(sf::Vector2i(-1,0));
-	}
-	return freePaths;
+    sf::Vector2i curr = getGridPosition(position);
+    std::vector<sf::Vector2i> freePaths;
+    auto tryAdd = [&](sf::Vector2i dir){
+        sf::Vector2i next = curr + dir;
+        if(next.x >= 0 && next.x < mapSize
+        && next.y >= 0 && next.y < mapSize
+        && getTile(next).getType() == Path) {
+            freePaths.push_back(dir);
+        }
+    };
+    tryAdd({0,-1});
+    tryAdd({0, 1});
+    tryAdd({1, 0});
+    tryAdd({-1,0});
+    return freePaths;
 }
+
 sf::Vector2i Map::castToBaseVector(sf::Vector2f vec){
 	int x_i = 0;
 	int y_i = 0;
