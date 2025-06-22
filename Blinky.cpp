@@ -34,7 +34,10 @@ void Blinky::teleportIfReady(){
 }
 sf::Vector2i Blinky::chooseTargetGridPosition(sf::Vector2f playerPosition){
 	return Map::getGridPosition(playerPosition);
-}	
+}
+sf::Vector2f Blinky::getPosition() {
+	return body.getPosition();
+}
 
 
 
