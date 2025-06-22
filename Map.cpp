@@ -39,9 +39,8 @@ void Map::loadMap(std::string layout[25]){
 }
 bool Map::gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition){
 	sf::Vector2i gridPos = getGridPosition(playerPosition);
-	Tile tile = getTile(gridPos);
-	if(tile.doesHaveCoin() &&
-			playerBounds.intersects(tile.getCoinBounds())){
+	Tile& tile = getTile(gridPos);
+	if(tile.doesHaveCoin() && playerBounds.intersects(tile.getCoinBounds())){
 		tile.updateCoin(false);
 		return true;
 	}
@@ -70,7 +69,7 @@ sf::Vector2i Map::getGridPosition(sf::Vector2f position){
 	return sf::Vector2i(x,y);
 }
 
-Tile Map::getTile(sf::Vector2i& position) {
+Tile& Map::getTile(sf::Vector2i& position) {
     return tiles[position.y][position.x];
 }
 

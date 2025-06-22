@@ -9,6 +9,7 @@ class Player : public Entity{
 		void handleInput(sf::Keyboard::Key&);
 		void setLives(int lives);
 		void setScore(int score);
+		bool getIsOffMap();
 		sf::Vector2f getPosition();
 		sf::FloatRect getBounds();
 		int getScore();

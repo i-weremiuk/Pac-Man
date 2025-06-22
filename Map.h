@@ -19,7 +19,7 @@ class Map{
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
 		static sf::Vector2i getGridPosition(sf::Vector2f position);
 		static sf::Vector2f castToPosition(sf::Vector2i tilePosition);
-		static Tile getTile(sf::Vector2i& position);
+		static Tile& getTile(sf::Vector2i& position);
 		int getCoinCount() const;
 	protected:
 		void loadMap(std::string layout[25]);

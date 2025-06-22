@@ -57,17 +57,11 @@ void Game::render(){
 
 void Game::update(sf::Time time){
 	sf::Vector2f playerPos = player.getPosition();
-	sf::Vector2i playerGridPos = Map::getGridPosition(playerPos);
-	if(playerGridPos != prevPlayerTile) {
-    lastTakenCoinTile = {-1, -1};
-    prevPlayerTile   = playerGridPos;
-	}
-	if(playerGridPos != lastTakenCoinTile){
+	if(!player.getIsOffMap()){
 		if(map.gotCoin(player.getBounds(), playerPos)){
 			player.setScore(player.getScore() +1);
 			scoreButton.setText(std::string("score : ") + std::to_string(player.getScore()));
-			lastTakenCoinTile = playerGridPos;
-			}
+		}
 	}
 	player.update(time, playerPos);
 	map.update(time);

@@ -43,7 +43,5 @@ class Game{
 		GameState state;
 		sf::Clock clock;
 
-		sf::Vector2i lastTakenCoinTile{-1, -1};
-		sf::Vector2i prevPlayerTile{-1,-1};
 };
 

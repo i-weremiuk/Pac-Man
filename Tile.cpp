@@ -26,6 +26,7 @@ void Tile::update(sf::Time dt){
 		coinTimer += dt.asSeconds();
 	}
 	if(coinTimer >= coinResetTime){
+		coinTimer = 0.f;
 		hasCoin = true;
 	}
 }

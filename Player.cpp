@@ -34,6 +34,10 @@ void Player::teleportIfReady(){
 	}
 }
 
+bool Player::getIsOffMap(){
+	return isOffMap;
+}
+
 sf::FloatRect Player::getBounds(){
 	return body.getGlobalBounds();
 }
