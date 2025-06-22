@@ -35,21 +35,28 @@ void Inky::teleportIfReady(){
 		}
 	}
 }
-/*sf::Vector2i Inky::chooseTargetGridPosition(sf::Vector2f playerPosition) {
+sf::Vector2i Inky::chooseTargetGridPosition(sf::Vector2f playerPosition) {
+    // Załóżmy, że kierunek Pac-Mana to ostatni kierunek ruchu (np. w prawo: (1,0))
+    // Tutaj przykładowo kierunek domyślny: w prawo
+    sf::Vector2i pacmanDir(1, 0); // Możesz podmienić na aktualny kierunek Pac-Mana
+
     sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
-    if (mode == Scatter) {
-        // prawy dolny róg
-        return sf::Vector2i(MAX_INDEX, MAX_INDEX);
-    } else if (mode == Chase) {
-        sf::Vector2i ahead = pacGrid + sf::Vector2i(2, 0);
-        ahead.x = std::clamp(ahead.x, 0, MAX_INDEX);
-        ahead.y = std::clamp(ahead.y, 0, MAX_INDEX);
-        return ahead;
-    } else {
-        return sf::Vector2i(std::rand() % GRID_SIZE, std::rand() % GRID_SIZE);
-    }
+
+    // Punkt 2 pola przed Pac-Manem w jego kierunku
+    sf::Vector2i przedGrid = pacGrid + pacmanDir * 2;
+
+    // Blinky jest zawsze 5 jednostek niżej niż Pac-Man
+    sf::Vector2i blinkyGrid = pacGrid + sf::Vector2i(0, 3);
+
+    // Wektor od Blinky'ego do punktu przed Pac-Manem
+    sf::Vector2i delta = przedGrid - blinkyGrid;
+
+    // Cel: blinky + 2 * delta
+    sf::Vector2i target = blinkyGrid + delta * 2;
+
+    // Ograniczenie do rozmiaru mapy (zakładamy 25x25)
+    target.x = std::clamp(target.x, 0, 24);
+    target.y = std::clamp(target.y, 0, 24);
+
+    return target;
 }
-*/
-sf::Vector2i Inky::chooseTargetGridPosition(sf::Vector2f playerPosition){
-	return Map::getGridPosition(playerPosition);
-}	
