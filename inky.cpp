@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 
-constexpr int GRID_SIZE = 25;
+constexpr int GRID_SIZE = 24;
 constexpr int MAX_INDEX = GRID_SIZE - 1;
 
 Inky::Inky(sf::RectangleShape body, sf::Vector2f position)
