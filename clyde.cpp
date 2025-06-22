@@ -1,5 +1,8 @@
 #include "Clyde.h"
+#include <vector>
+#include <iostream>
 #include "Map.h"
+#include "Ghost.h"
 #include <cmath>
 #include <cstdlib>
 
@@ -35,8 +38,10 @@ void Clyde::teleportIfReady(){
 	}
 }
 sf::Vector2i Clyde::chooseTargetGridPosition(sf::Vector2f playerPosition) {
-    sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
-    if (mode == Scatter) {
+  	return Map::getGridPosition(playerPosition);
+
+    // sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
+   /* if (mode == Scatter) {
         // lewy dolny róg
         return sf::Vector2i(0, MAX_INDEX);
     } else if (mode == Chase) {
@@ -49,5 +54,5 @@ sf::Vector2i Clyde::chooseTargetGridPosition(sf::Vector2f playerPosition) {
     } else {
         // Debuff: losowo
         return sf::Vector2i(std::rand() % GRID_SIZE, std::rand() % GRID_SIZE);
-    }
+    }*/
 }

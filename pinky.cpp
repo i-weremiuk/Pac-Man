@@ -1,4 +1,7 @@
 #include "Pinky.h"
+#include "Ghost.h"
+#include <vector>
+#include <iostream>
 #include "Map.h"
 #include <cstdlib>
 
@@ -33,10 +36,12 @@ void Pinky::teleportIfReady(){
 		}
 	}
 }
+// ...existing code...
 sf::Vector2i Pinky::chooseTargetGridPosition(sf::Vector2f playerPosition) {
     sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
+
     if (mode == Scatter) {
-        // lewy górny róg
+        // Lewy górny róg
         return sf::Vector2i(0, 0);
     } else if (mode == Chase) {
         // 4 pola przed Pac-Manem w prawo (domyślnie)
