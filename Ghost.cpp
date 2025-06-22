@@ -1,36 +1,66 @@
 #include <SFML/Graphics.hpp>
 #include "Ghost.h"
+#include "Map.h"
 #include "Entity.h"
 #include <vector>
 #include <iostream>
-#include "Map.h"
 
 Ghost::Ghost(sf::RectangleShape body, sf::Vector2f position)
 	: Entity(body, position){
 	}
 
-sf::Vector2i Ghost::getNextTurn (sf::Vector2i targetGridPosition){
+sf::Vector2i Ghost::getNextTurn(sf::Vector2i targetTile) {
+    sf::Vector2i selfGrid = Map::getGridPosition(body.getPosition());
+    sf::Vector2i currDir = Map::getCurrDirection(velocity);
 
-	sf::Vector2i currGridPosition = Map::getGridPosition(position);
+    // Możliwe kierunki ruchu
+    std::vector<sf::Vector2i> directions = {
+        {1, 0}, {-1, 0}, {0, 1}, {0, -1}
+    };
 
-	sf::Vector2i horizontal = 
-		Map::castToBaseVector(sf::Vector2f(targetGridPosition.x - currGridPosition.x, 0.f));
+    // Sprawdź dostępne ścieżki (nie ściany)
+    std::vector<sf::Vector2i> validDirs;
+    for (const auto& dir : directions) {
+        // Nie zawracaj, chyba że to jedyna opcja (ślepa uliczka)
+        if (dir == -currDir) continue;
+        sf::Vector2i next = selfGrid + dir;
+        if (next.x >= 0 && next.x < 24 &&
+            next.y >= 0 && next.y < 24) {
+            // Map::getTile wymaga referencji
+            sf::Vector2i nextCopy = next;
+            if (Map::getTile(nextCopy).getType() == Path) {
+                validDirs.push_back(dir);
+            }
+        }
+    }
 
-	sf::Vector2i vertical = 
-		Map::castToBaseVector(sf::Vector2f(0.f, targetGridPosition.y - currGridPosition.y));
+    // Jeśli nie ma innych opcji niż zawrócenie (ślepa uliczka), pozwól na zawrócenie
+    if (validDirs.empty()) {
+        sf::Vector2i back = -currDir;
+        sf::Vector2i next = selfGrid + back;
+        if (next.x >= 0 && next.x < 24 &&
+            next.y >= 0 && next.y < 24) {
+            sf::Vector2i nextCopy = next;
+            if (Map::getTile(nextCopy).getType() == Path) {
+                return back;
+            }
+        }
+        // Jeśli nawet nie można zawrócić, zostań w miejscu
+        return {0, 0};
+    }
 
-	std::vector<sf::Vector2i> freePaths = Map::getFreePaths(position);
-
-	for(auto v : freePaths){
-		if(v == horizontal){
-			return v;
-		}
-		if(v == vertical){
-			return v;
-		}
-	}
-
-	return freePaths[0];
+    // Wybierz kierunek, który minimalizuje odległość do celu
+    sf::Vector2i bestDir = validDirs[0];
+    int minDist = std::abs((selfGrid + bestDir).x - targetTile.x) + std::abs((selfGrid + bestDir).y - targetTile.y);
+    for (const auto& dir : validDirs) {
+        sf::Vector2i next = selfGrid + dir;
+        int dist = std::abs(next.x - targetTile.x) + std::abs(next.y - targetTile.y);
+        if (dist < minDist) {
+            minDist = dist;
+            bestDir = dir;
+        }
+    }
+    return bestDir;
 }
 
 void Ghost::update(sf::Time dt, sf::Vector2f playerPosition){
