@@ -38,11 +38,17 @@ void Game::render(){
 	map.draw(window);
 	player.draw(window);
 	blinky.draw(window);
+	pinky.draw(window);
+    inky.draw(window);
+    clyde.draw(window);
 }
 
 void Game::update(sf::Time time){
 	sf::Vector2f playerPos = player.getPosition();
 	player.update(time, playerPos);
 	blinky.update(time, playerPos);
+	pinky.update(time, playerPos);
+    inky.update(time, playerPos);
+    clyde.update(time, playerPos);
 }
 

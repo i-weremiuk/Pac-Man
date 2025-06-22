@@ -1,8 +1,15 @@
-class Pinky : public Ghost{
-	protected:
-		sf::Vector2i chooseTarget(const Map& map, const Player& p) override{
-			//scatter - lewy górny róg
-			//chase - celuje w 4 pola gridu przed pacmanem
-			//flee - losowo
-		}
-}
+#pragma once
+#include "Ghost.h"
+
+class Pinky : public Ghost {
+public:
+    Pinky(sf::RectangleShape body, sf::Vector2f position);
+
+protected:
+    // Scatter: lewy górny róg
+    // Chase: 4 pola przed Pac-Manem
+    // Debuff: losowo
+    sf::Vector2i chooseTargetGridPosition(sf::Vector2f playerPosition) override;
+	void teleportIfReady();
+			bool hasTeleported = false;
+};
