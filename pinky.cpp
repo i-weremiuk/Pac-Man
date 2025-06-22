@@ -36,21 +36,18 @@ void Pinky::teleportIfReady(){
 		}
 	}
 }
-// ...existing code...
+
 sf::Vector2i Pinky::chooseTargetGridPosition(sf::Vector2f playerPosition) {
     sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
 
-    if (mode == Scatter) {
-        // Lewy górny róg
-        return sf::Vector2i(0, 0);
-    } else if (mode == Chase) {
-        // 4 pola przed Pac-Manem w prawo (domyślnie)
-        sf::Vector2i target = pacGrid + sf::Vector2i(4, 0);
-        target.x = std::clamp(target.x, 0, MAX_INDEX);
-        target.y = std::clamp(target.y, 0, MAX_INDEX);
-        return target;
-    } else {
-        // Debuff: losowo
-        return sf::Vector2i(std::rand() % GRID_SIZE, std::rand() % GRID_SIZE);
-    }
+    // Pinky zawsze celuje 4 pola nad Pac-Manem
+    sf::Vector2i target = pacGrid + sf::Vector2i(0, -4);
+    target.x = std::clamp(target.x, 0, MAX_INDEX);
+    target.y = std::clamp(target.y, 0, MAX_INDEX);
+    return target;
 }
+     
+
+
+
+

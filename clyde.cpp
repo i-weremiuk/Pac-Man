@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 // Wielkość siatki 25x25 (0..24)
-constexpr int GRID_SIZE = 25;
+constexpr int GRID_SIZE = 24;
 constexpr int MAX_INDEX = GRID_SIZE - 1;
 
 Clyde::Clyde(sf::RectangleShape body, sf::Vector2f position)
@@ -38,21 +38,30 @@ void Clyde::teleportIfReady(){
 	}
 }
 sf::Vector2i Clyde::chooseTargetGridPosition(sf::Vector2f playerPosition) {
-  	return Map::getGridPosition(playerPosition);
+    sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
+    sf::Vector2i selfGrid = Map::getGridPosition(body.getPosition());
 
-    // sf::Vector2i pacGrid = Map::getGridPosition(playerPosition);
-   /* if (mode == Scatter) {
-        // lewy dolny róg
-        return sf::Vector2i(0, MAX_INDEX);
+    // Manhattan distance
+    int dist = std::abs(selfGrid.x - pacGrid.x) + std::abs(selfGrid.y - pacGrid.y);
+
+    sf::Vector2i scatterCorner(0, 0); // lewy górny róg
+
+    if (mode == Scatter) {
+        return scatterCorner;
     } else if (mode == Chase) {
-        sf::Vector2i selfGrid = Map::getGridPosition(body.getPosition());
-        float dx = float(selfGrid.x - pacGrid.x);
-        float dy = float(selfGrid.y - pacGrid.y);
-        float dist = std::sqrt(dx*dx + dy*dy);
-        // goni gdy daleko, w przeciwnym razie wraca do rogu
-        return (dist > 8.0f) ? pacGrid : sf::Vector2i(0, MAX_INDEX);
+        if (selfGrid == scatterCorner) {
+            // Jeśli Clyde jest w lewym górnym rogu, goni Pac-Mana
+            return pacGrid;
+        }
+        if (dist > 8) {
+            // Goni Pac-Mana
+            return pacGrid;
+        } else {
+            // Wycofuje się do scatter-corner
+            return scatterCorner;
+        }
     } else {
         // Debuff: losowo
         return sf::Vector2i(std::rand() % GRID_SIZE, std::rand() % GRID_SIZE);
-    }*/
+    }
 }
