@@ -11,6 +11,7 @@ Player::Player(sf::RectangleShape body, sf::Vector2f position)
 
 			}
 
+
 void Player::teleportIfReady(){
 	sf::Vector2i currTile = Map::getGridPosition(position);
 	if(Map::isCentered(position)){
@@ -33,8 +34,11 @@ void Player::teleportIfReady(){
 	}
 }
 
+sf::FloatRect Player::getBounds(){
+	return body.getGlobalBounds();
+}
+
 void Player::update(sf::Time dt, sf::Vector2f playerPos){
-	
 	if(Map::isLeavingMap(position)){
 		isOffMap = true;
 	}else{
@@ -64,11 +68,22 @@ void Player::update(sf::Time dt, sf::Vector2f playerPos){
 		}
 	}
 
-	std::cout<<position.x<<" "<<position.y<<" "<<Map::getGridPosition(position).x<<" "<<Map::getGridPosition(position).y<<"\n";
 
 	position += dt.asSeconds() * velocity;
 	body.setPosition(position);
 
+}
+
+void Player::setScore(int scoreState){
+	score = scoreState;
+}
+
+int Player::getScore(){
+	return score;
+}
+
+sf::Vector2f Player::getPosition(){
+	return body.getPosition();
 }
 
 void Player::handleInput(sf::Keyboard::Key& key){

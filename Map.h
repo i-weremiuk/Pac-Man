@@ -7,6 +7,8 @@ class Map{
 		void draw(sf::RenderWindow&);
 		bool isWall(const sf::Vector2i& gridPosition) const;
 		bool isIntersection(const sf::Vector2i& gridPosition) const;
+		bool gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition);
+		void update(sf::Time dt);
 		std::vector<sf::Vector2i> getPossibleDirections(const sf::Vector2i& gridPosition) const;
 		static bool isCentered(sf::Vector2f position);
 		static bool checkPath(sf::Vector2f position, sf::Vector2i turn);
@@ -17,8 +19,7 @@ class Map{
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
 		static sf::Vector2i getGridPosition(sf::Vector2f position);
 		static sf::Vector2f castToPosition(sf::Vector2i tilePosition);
-		static Tile getTile(sf::Vector2i position);
-		
+		static Tile getTile(sf::Vector2i& position);
 		int getCoinCount() const;
 	protected:
 		void loadMap(std::string layout[25]);

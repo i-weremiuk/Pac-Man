@@ -7,10 +7,11 @@ class Player : public Entity{
 		Player(sf::RectangleShape body, sf::Vector2f position);
 		void update(sf::Time dt, sf::Vector2f playerPosition) override;
 		void handleInput(sf::Keyboard::Key&);
-		int getLives() const;
-		int getScore() const;
-		void setLives();
-		void setScore();
+		void setLives(int lives);
+		void setScore(int score);
+		sf::Vector2f getPosition();
+		sf::FloatRect getBounds();
+		int getScore();
 		void die();
 	
 	private:

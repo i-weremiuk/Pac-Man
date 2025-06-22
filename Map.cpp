@@ -21,15 +21,37 @@ void Map::loadMap(std::string layout[25]){
 			body.setPosition(j*tileSize,i*tileSize);
 			sf::Color color;
 			tileType type;
+			bool hasCoin = false;
 			if(c == '#'){
 				color = sf::Color::Blue;
 				type = Wall;
+				
 			}else{
 				color = sf::Color::White;
 				type = Path;
+				hasCoin = true;
 			}
+			
 			body.setFillColor(color);
-			tiles[i][j] = Tile(body,type);
+			tiles[i][j] = Tile(body,type,hasCoin);
+		}
+	}
+}
+bool Map::gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition){
+	sf::Vector2i gridPos = getGridPosition(playerPosition);
+	Tile tile = getTile(gridPos);
+	if(tile.doesHaveCoin() &&
+			playerBounds.intersects(tile.getCoinBounds())){
+		tile.updateCoin(false);
+		return true;
+	}
+	return false;
+}
+
+void Map::update(sf::Time dt){
+	for(int i =0; i<mapSize;i++){
+		for(int j=0;j<mapSize;j++){
+			tiles[i][j].update(dt);
 		}
 	}
 }
@@ -48,8 +70,8 @@ sf::Vector2i Map::getGridPosition(sf::Vector2f position){
 	return sf::Vector2i(x,y);
 }
 
-Tile Map::getTile(sf::Vector2i position){
-	return tiles[position.y][position.x];
+Tile Map::getTile(sf::Vector2i& position) {
+    return tiles[position.y][position.x];
 }
 
 bool Map::isLeavingMap(sf::Vector2f position){

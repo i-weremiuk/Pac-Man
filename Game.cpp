@@ -1,8 +1,18 @@
 #include "Game.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
+Game::Game(){
+	if(!font.loadFromFile("OpenSans-Regular.ttf")){
+		std::cout<<"błąd\n";
+	}else{
+		std::cout<<"git\n";
+	}
+	scoreButton = Button{scoreButtonPosition, "score : 0", font};
 
+}
 void Game::run(){
+
 	while(window.isOpen()){
 		
 		sf::Event event;
@@ -39,16 +49,30 @@ void Game::render(){
 	player.draw(window);
 	blinky.draw(window);
 	pinky.draw(window);
-    inky.draw(window);
-    clyde.draw(window);
+  inky.draw(window);
+  clyde.draw(window);
+
+	scoreButton.draw(window);
 }
 
 void Game::update(sf::Time time){
 	sf::Vector2f playerPos = player.getPosition();
+	sf::Vector2i playerGridPos = Map::getGridPosition(playerPos);
+	if(playerGridPos != prevPlayerTile) {
+    lastTakenCoinTile = {-1, -1};
+    prevPlayerTile   = playerGridPos;
+	}
+	if(playerGridPos != lastTakenCoinTile){
+		if(map.gotCoin(player.getBounds(), playerPos)){
+			player.setScore(player.getScore() +1);
+			scoreButton.setText(std::string("score : ") + std::to_string(player.getScore()));
+			lastTakenCoinTile = playerGridPos;
+			}
+	}
 	player.update(time, playerPos);
+	map.update(time);
 	blinky.update(time, playerPos);
 	pinky.update(time, playerPos);
-    inky.update(time, playerPos);
-    clyde.update(time, playerPos);
+  inky.update(time, playerPos);
+  clyde.update(time, playerPos);
 }
-
