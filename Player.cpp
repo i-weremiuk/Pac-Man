@@ -43,11 +43,19 @@ sf::FloatRect Player::getBounds(){
 }
 
 void Player::update(sf::Time dt, sf::Vector2f playerPos){
+	if(isInvicible){
+		invicibleTimer += dt.asSeconds();
+		if(invicibleTimer >= deathTimeLimit){
+			invicibleTimer = 0.f;
+			isInvicible = false;
+		}
+	}
 	if(isDead){
 		deathTimer += dt.asSeconds();
 		if(deathTimer >= deathTimeLimit){
 			deathTimer = 0.f;
 			isDead = false;
+			isInvicible = true;
 		}
 		return;
 	}
@@ -142,4 +150,7 @@ void Player::draw(sf::RenderWindow& window){
 
 void Player::setPosition(sf::Vector2f position){
 	body.setPosition(position);
+}
+bool Player::getIsInvicible(){
+	return isInvicible;
 }

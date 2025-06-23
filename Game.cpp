@@ -77,6 +77,8 @@ void Game::update(sf::Time time){
 			clyde.setMode(1);
 			inky.setMode(1);
 		}
+		if(!player.getIsInvicible()){
+
 		if(player.getBounds().intersects(blinky.getBounds())){
 			if(player.getIsGod()){
 				blinky.setIsDead(true);
@@ -109,7 +111,10 @@ void Game::update(sf::Time time){
 				player.setPosition(playerStartPosition);
 			}
 		}
-}
+		}
+	}
+
+
 	
 
 	player.update(time, playerPos);

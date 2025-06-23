@@ -67,10 +67,11 @@ void Ghost::update(sf::Time dt, sf::Vector2f playerPosition){
 	if(isDead){
 		deathTimer += dt.asSeconds();
 		if(deathTimer >= deathTimeLimit){
-			deathTimer = 0;
+			deathTimer = 0.f;
 			isDead = false;
 		}
-	}else{
+		return;
+	}
 
 		sf::Vector2i targetTile = chooseTargetGridPosition(playerPosition);
 		nextTurn = getNextTurn(targetTile);
@@ -83,7 +84,6 @@ void Ghost::update(sf::Time dt, sf::Vector2f playerPosition){
 	
 		position += dt.asSeconds() * velocity;
 		body.setPosition(position);
-	}
 }
 
 void Ghost::draw(sf::RenderWindow& window){
@@ -95,6 +95,7 @@ void Ghost::draw(sf::RenderWindow& window){
 
 void Ghost::setIsDead(bool state){
 	isDead = state;
+	deathTimer = 0.f;
 }
 
 void Ghost::setMode(int state){
@@ -106,3 +107,14 @@ void Ghost::setMode(int state){
 sf::FloatRect Ghost::getBounds(){
 	return body.getGlobalBounds();
 }
+
+void Ghost::setIsWaiting (bool state){
+	isWaiting = state;
+}
+void Ghost::setPosition(sf::Vector2f position){
+	body.setPosition(position);
+}
+
+
+
+
