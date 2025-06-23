@@ -9,8 +9,9 @@ Game::Game(){
 		std::cout<<"git\n";
 	}
 	scoreButton = Button{scoreButtonPosition, "score : 0", font};
-
+  
 }
+
 void Game::run(){
 
 	while(window.isOpen()){
@@ -55,12 +56,22 @@ void Game::render(){
 	scoreButton.draw(window);
 }
 
+
+
 void Game::update(sf::Time time){
+	boostTimer += time.asSeconds();
+	if(boostTimer >= boostResetTime){
+		map.putBoost(map.generateRandomGridPosition());		
+		boostTimer = 0.f;
+	}
 	sf::Vector2f playerPos = player.getPosition();
 	if(!player.getIsOffMap()){
 		if(map.gotCoin(player.getBounds(), playerPos)){
 			player.setScore(player.getScore() +1);
 			scoreButton.setText(std::string("score : ") + std::to_string(player.getScore()));
+		}
+		if(map.gotBoost(player.getBounds(), playerPos)){
+			
 		}
 	}
 	player.update(time, playerPos);

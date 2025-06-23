@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <random>
 #include "Tile.h"
 class Map{
 	public:
@@ -8,18 +9,21 @@ class Map{
 		bool isWall(const sf::Vector2i& gridPosition) const;
 		bool isIntersection(const sf::Vector2i& gridPosition) const;
 		bool gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition);
+		bool gotBoost(sf::FloatRect playerBounds, sf::Vector2f playerPosition);
+		void putBoost(sf::Vector2i gridPosition);
 		void update(sf::Time dt);
 		std::vector<sf::Vector2i> getPossibleDirections(const sf::Vector2i& gridPosition) const;
 		static bool isCentered(sf::Vector2f position);
 		static bool checkPath(sf::Vector2f position, sf::Vector2i turn);
 		static bool isParalell(sf::Vector2i v1, sf::Vector2i v2);
 		static bool isLeavingMap(sf::Vector2f pos);
+		sf::Vector2i generateRandomGridPosition();
 		static std::vector<sf::Vector2i> getFreePaths(sf::Vector2f position);
 		static sf::Vector2i castToBaseVector(sf::Vector2f v);
 		static sf::Vector2i getCurrDirection(sf::Vector2f velocity);
 		static sf::Vector2i getGridPosition(sf::Vector2f position);
 		static sf::Vector2f castToPosition(sf::Vector2i tilePosition);
-		static Tile& getTile(sf::Vector2i& position);
+		static Tile& getTile(sf::Vector2i position);
 		int getCoinCount() const;
 	protected:
 		void loadMap(std::string layout[25]);
@@ -59,4 +63,7 @@ class Map{
 		sf::Texture wallTexture;
 		sf::Texture coinTexture;
 		sf::Texture boostTexture;
+  	std::mt19937 gen;            
+  	std::uniform_int_distribution<> dist;
+
 };

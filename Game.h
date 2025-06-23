@@ -43,5 +43,8 @@ class Game{
 		GameState state;
 		sf::Clock clock;
 
+		float boostResetTime = 15.0f;
+		float boostTimer = 0.f;
+
 };
 

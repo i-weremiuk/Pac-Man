@@ -5,7 +5,7 @@
 #include "Tile.h"
 #include <vector>
 
-Map::Map(){
+Map::Map(): gen(std::random_device{}()), dist(0, 24){
 	loadMap(layout);
 }
 float Map::tileSize = 40.0f;
@@ -37,6 +37,20 @@ void Map::loadMap(std::string layout[25]){
 		}
 	}
 }
+sf::Vector2i Map::generateRandomGridPosition(){
+	int i = dist(gen);
+	int j = dist(gen);
+	while(getTile(sf::Vector2i(i, j)).getType() != Path){
+		i = dist(gen);
+		j = dist(gen);
+	}
+	return sf::Vector2i(i, j);
+}
+
+void Map::putBoost(sf::Vector2i gridPosition){
+	tiles[gridPosition.y][gridPosition.x].updateBoost(true);
+}
+
 bool Map::gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition){
 	sf::Vector2i gridPos = getGridPosition(playerPosition);
 	Tile& tile = getTile(gridPos);
@@ -46,6 +60,18 @@ bool Map::gotCoin(sf::FloatRect playerBounds, sf::Vector2f playerPosition){
 	}
 	return false;
 }
+
+bool Map::gotBoost(sf::FloatRect playerBounds, sf::Vector2f playerPosition){
+	sf::Vector2i gridPos = getGridPosition(playerPosition);
+	Tile& tile = getTile(gridPos);
+	if(tile.doesHaveBoost() && playerBounds.intersects(tile.getBoostBounds())){
+		tile.updateBoost(false);
+		return true;
+	}
+	return false;
+}
+
+
 
 void Map::update(sf::Time dt){
 	for(int i =0; i<mapSize;i++){
@@ -69,7 +95,7 @@ sf::Vector2i Map::getGridPosition(sf::Vector2f position){
 	return sf::Vector2i(x,y);
 }
 
-Tile& Map::getTile(sf::Vector2i& position) {
+Tile& Map::getTile(sf::Vector2i position) {
     return tiles[position.y][position.x];
 }
 
