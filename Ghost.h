@@ -5,15 +5,20 @@ class Ghost : public Entity{
 		enum Mode {Scatter, Chase, Debuff};
 		Ghost(sf::RectangleShape body, sf::Vector2f startPosition);
 		void update(sf::Time dt, sf::Vector2f playerPosition) override;
-		//Scatter - uciekają każdy do swojego rogu
-		//Chase  - gonią pacmana każdy własną logike do tego ma
-		//flee - jak pacman zje buffa to one się robią wolniejsze, losowo biegają i można je zjeść
-		void setMode(Mode m);
+		void setMode(int state);
 		Mode getMode() const;
+		void setIsDead(bool state);
+		void draw(sf::RenderWindow& window);
+		sf::FloatRect getBounds();
 
 	protected:
 		Mode mode;
 		virtual sf::Vector2i chooseTargetGridPosition(sf::Vector2f playerPosition) = 0;
 		sf::Vector2i getNextTurn(sf::Vector2i targetTile);
+	
+	private: 
+		bool isDead = false;
+		bool deathTimer = 0.f;
+		float deathTimeLimit = 20.f;
 
 };

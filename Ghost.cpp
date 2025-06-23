@@ -64,16 +64,45 @@ sf::Vector2i Ghost::getNextTurn(sf::Vector2i targetTile) {
 }
 
 void Ghost::update(sf::Time dt, sf::Vector2f playerPosition){
+	if(isDead){
+		deathTimer += dt.asSeconds();
+		if(deathTimer >= deathTimeLimit){
+			deathTimer = 0;
+			isDead = false;
+		}
+	}else{
 
-	sf::Vector2i targetTile = chooseTargetGridPosition(playerPosition);
-	nextTurn = getNextTurn(targetTile);
-	if(Map::isParalell(Map::getCurrDirection(velocity), nextTurn)){
-		turn(nextTurn);
-	}else if(Map::isCentered(position) && Map::checkPath(position, nextTurn)){
-		turn(nextTurn);
-	}
+		sf::Vector2i targetTile = chooseTargetGridPosition(playerPosition);
+		nextTurn = getNextTurn(targetTile);
+		if(Map::isParalell(Map::getCurrDirection(velocity), nextTurn)){
+			turn(nextTurn);
+		}else if(Map::isCentered(position) && Map::checkPath(position, nextTurn)){
+			turn(nextTurn);
+		}
 
 	
-	position += dt.asSeconds() * velocity;
-	body.setPosition(position);
+		position += dt.asSeconds() * velocity;
+		body.setPosition(position);
+	}
+}
+
+void Ghost::draw(sf::RenderWindow& window){
+	if(!isDead){
+		window.draw(body);
+	}
+}
+
+
+void Ghost::setIsDead(bool state){
+	isDead = state;
+}
+
+void Ghost::setMode(int state){
+	if(state == 1){
+		mode = Scatter;
+	}
+}
+
+sf::FloatRect Ghost::getBounds(){
+	return body.getGlobalBounds();
 }

@@ -10,6 +10,12 @@ class Player : public Entity{
 		void setLives(int lives);
 		void setScore(int score);
 		bool getIsOffMap();
+		void setGodMode(bool state);
+		void setIsDead(bool state);
+		void setPosition(sf::Vector2f position);
+		bool getIsGod();
+		bool getIsDead();
+		void draw(sf::RenderWindow& window);
 		sf::Vector2f getPosition();
 		sf::FloatRect getBounds();
 		int getScore();
@@ -21,4 +27,11 @@ class Player : public Entity{
 		int score;
 		bool isOffMap = false;
 		bool hasTeleported = false;
+		bool isGod = false;
+		bool isDead = false;
+		float deathTimer = 0.f;
+		float deathTimeLimit = 10.f;
+		float godTimer = 0.f;
+		float godTimeLimit = 10.0f;
+		
 };

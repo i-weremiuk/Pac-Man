@@ -71,9 +71,47 @@ void Game::update(sf::Time time){
 			scoreButton.setText(std::string("score : ") + std::to_string(player.getScore()));
 		}
 		if(map.gotBoost(player.getBounds(), playerPos)){
-			
+			player.setGodMode(true);
+			blinky.setMode(1);
+			pinky.setMode(1);
+			clyde.setMode(1);
+			inky.setMode(1);
 		}
-	}
+		if(player.getBounds().intersects(blinky.getBounds())){
+			if(player.getIsGod()){
+				blinky.setIsDead(true);
+			}else{
+				player.setIsDead(true);
+				player.setPosition(playerStartPosition);
+			}
+		}
+		if(player.getBounds().intersects(clyde.getBounds())){
+			if(player.getIsGod()){
+				clyde.setIsDead(true);
+			}else{
+				player.setIsDead(true);
+				player.setPosition(playerStartPosition);
+			}
+		}
+		if(player.getBounds().intersects(inky.getBounds())){
+			if(player.getIsGod()){
+				inky.setIsDead(true);
+			}else{
+				player.setIsDead(true);
+				player.setPosition(playerStartPosition);
+			}
+		}
+		if(player.getBounds().intersects(pinky.getBounds())){
+			if(player.getIsGod()){
+				pinky.setIsDead(true);
+			}else{
+				player.setIsDead(true);
+				player.setPosition(playerStartPosition);
+			}
+		}
+}
+	
+
 	player.update(time, playerPos);
 	map.update(time);
 	blinky.update(time, playerPos);

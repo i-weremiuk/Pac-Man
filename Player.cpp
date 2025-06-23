@@ -43,11 +43,27 @@ sf::FloatRect Player::getBounds(){
 }
 
 void Player::update(sf::Time dt, sf::Vector2f playerPos){
+	if(isDead){
+		deathTimer += dt.asSeconds();
+		if(deathTimer >= deathTimeLimit){
+			deathTimer = 0.f;
+			isDead = false;
+		}
+		return;
+	}
 	if(Map::isLeavingMap(position)){
 		isOffMap = true;
 	}else{
 		hasTeleported = false;
 		isOffMap = false;
+	}
+
+	if(isGod){
+		godTimer += dt.asSeconds();
+		if(godTimer >= godTimeLimit){
+			isGod = false;
+			godTimer = 0.f;
+		}
 	}
 
 	if(isOffMap){ 
@@ -103,3 +119,27 @@ void Player::handleInput(sf::Keyboard::Key& key){
 	}
 }
 
+void Player::setGodMode(bool state){
+	isGod = state;
+}
+
+void Player::setIsDead(bool state){
+	isDead = state;
+}
+
+bool Player::getIsGod(){
+	return isGod;
+}
+
+bool Player::getIsDead(){
+	return isDead;
+}
+void Player::draw(sf::RenderWindow& window){
+	if(!isDead){
+		window.draw(body);
+	}
+}
+
+void Player::setPosition(sf::Vector2f position){
+	body.setPosition(position);
+}
