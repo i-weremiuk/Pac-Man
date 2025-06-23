@@ -1,0 +1,100 @@
+PAC-MAN SFML C++ – DOKUMENTACJA PROJEKTU
+
+-------------------------------------------------------------------------------
+
+1. OPIS PROJEKTU
+
+Projekt stanowi uproszczoną wersję gry Pac-Man napisanej w języku C++ z wykorzystaniem biblioteki SFML. Gracz steruje Pac-Manem, zbiera monety i boosty, unika duchów lub zjada je w trybie "God Mode". Plansza gry to siatka 25x25 pól, a każdy duch posiada własną logikę poruszania się.
+
+-------------------------------------------------------------------------------
+
+2. STRUKTURA KLAS
+
+2.1. Game
+
+Główna klasa zarządzająca logiką gry, pętlą główną, obsługą zdarzeń, aktualizacją stanu gry i renderowaniem.
+- Najważniejsze metody: run(), pause(), restart(), handleEvents(), update(), render()
+- Przechowuje instancje: Map, Player, Blinky, Pinky, Inky, Clyde, Button (score)
+
+2.2. Map
+
+Zarządza planszą gry, kafelkami, monetami, boostami oraz logiką ścian i ścieżek.
+- Najważniejsze metody: draw(), update(), gotCoin(), gotBoost(), putBoost()
+- Statyczna tablica kafelków Tile tiles[25][25]
+- Funkcje narzędziowe: pozycjonowanie, sprawdzanie ścieżek, generowanie losowych pozycji
+
+2.3. Tile
+
+Reprezentuje pojedynczy kafelek planszy – ścianę lub ścieżkę, może zawierać monetę lub boosta.
+- Najważniejsze metody: draw(), update(), updateCoin(), updateBoost(), getCoinBounds(), getBoostBounds(), doesHaveCoin(), doesHaveBoost()
+
+2.4. Player (dziedziczy po Entity)
+
+Reprezentuje Pac-Mana, obsługuje ruch, wejście z klawiatury, wynik, tryb "God Mode" i śmierć.
+- Najważniejsze metody: update(), handleInput(), setScore(), getScore(), setGodMode(), getIsGod(), setIsDead(), getIsDead(), teleportIfReady()
+
+2.5. Entity (klasa abstrakcyjna)
+
+Bazowa klasa dla wszystkich poruszających się obiektów (gracz, duchy).
+- Najważniejsze metody: update() (czysto wirtualna), turn(), draw(), getPosition()
+- Przechowuje pozycję, prędkość, kierunek ruchu
+
+2.6. Ghost (klasa abstrakcyjna, dziedziczy po Entity)
+
+Bazowa klasa dla wszystkich duchów. Zarządza trybami AI (Scatter, Chase, Debuff), ruchem i śmiercią ducha.
+- Najważniejsze metody: update(), setMode(), getMode(), setIsDead(), chooseTargetGridPosition() (czysto wirtualna), getNextTurn()
+
+2.7. Blinky, Pinky, Inky, Clyde (dziedziczą po Ghost)
+
+Każdy duch posiada własną implementację AI w metodzie chooseTargetGridPosition():
+- Blinky: Goni Pac-Mana bezpośrednio.
+- Pinky: Celuje 4 pola przed Pac-Manem.
+- Inky: Celuje w punkt wyznaczony przez wektor między Blinky a punktem przed Pac-Manem.
+- Clyde: Goni Pac-Mana, jeśli jest daleko, w przeciwnym razie wraca do swojego rogu.
+Każdy duch posiada także metodę teleportIfReady() do obsługi tuneli.
+
+2.8. Button
+
+Prosty przycisk UI do wyświetlania tekstu (np. wyniku).
+- Najważniejsze metody: draw(), setText()
+
+2.9. Menu
+
+Stub pod przyszłe menu gry.
+- Najważniejsze metody: draw(), update()
+
+2.10. tileType (enum)
+
+Typ kafelka: Wall (ściana) lub Path (ścieżka).
+
+-------------------------------------------------------------------------------
+
+3. BUDOWANIE I URUCHAMIANIE
+
+Wymagania:
+- Kompilator C++ (C++17 lub nowszy)
+- Biblioteka SFML
+
+Budowanie:
+g++ -std=c++17 *.cpp -o pacman -lsfml-graphics -lsfml-window -lsfml-system
+
+Uruchamianie:
+./pacman
+
+-------------------------------------------------------------------------------
+
+4. STEROWANIE
+
+- Strzałki: ruch Pac-Mana
+- Escape: wyjście z gry
+
+-------------------------------------------------------------------------------
+
+5. DODATKOWE INFORMACJE
+
+- Duchy mają różne prędkości i zachowania AI.
+- Monety odradzają się po czasie.
+- Boosty pojawiają się okresowo i umożliwiają zjadanie duchów.
+- Tunele teleportujące znajdują się na krawędziach planszy.
+
+-------------------------------------------------------------------------------
