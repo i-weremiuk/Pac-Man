@@ -1,0 +1,151 @@
+<diagram program="umletino" version="15.1"><zoom_level>13</zoom_level><help_text>Player
+
+--
+(— w minimalnym szkielecie brak metod publicznych —)
+--
+(— brak metod protected/private —)
+--
+(— brak atrybutów —)
+</help_text><element><id>UMLClass</id><coordinates><x>611</x><y>52</y><w>338</w><h>286</h></coordinates><panel_attributes>Game
+
+--
+  + Game()
+  + run() : void
+  + pause() : void
+  + restart() : void
+  --
+  - handleEvents(event : sf::Event) : void
+  - update(dt : sf::Time) : void
+  - render() : void
+  --
+  - font                      : sf::Font
+  - videoMode                 : sf::VideoMode
+  - window                    : sf::RenderWindow
+  - map                       : Map
+  - playerStartPosition       : sf::Vector2f
+  - blinkyStartPosition       : sf::Vector2f
+  - pinkyStartPosition        : sf::Vector2f
+  - inkyStartPosition         : sf::Vector2f
+  - clydeStartPosition        : sf::Vector2f
+  - player                    : Player
+  - blinky                    : Blinky
+  - pinky                     : Pinky
+  - inky                      : Inky
+  - clyde                     : Clyde
+  - scoreButtonPosition       : sf::Vector2f
+  - scoreButton               : Button
+  - state                     : GameState
+  - clock                     : sf::Clock
+  - boostResetTime            : float
+  - boostTimer                : float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1027</x><y>0</y><w>390</w><h>338</h></coordinates><panel_attributes>Entity
+
+--
++ update(dt : sf::Time) : void
++ draw(window : sf::RenderWindow&amp;) : void
++ getPosition() : sf::Vector2f
++getBaseVector():void
+--
+void turn(sf::Vector2i turnVector);
+- body;
+- velocity;
+-baseVector;
+-position;
+-startPosition;
+-nextTurn;
+-turnQueued;
+- speed = 200.0f; 
+-rightTurn;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1183</x><y>975</y><w>273</w><h>247</h></coordinates><panel_attributes>Inky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
++getPosition()
+--
++teleportIfReady();
+--
+(— brak własnych atrybutów —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>585</x><y>429</y><w>351</w><h>351</h></coordinates><panel_attributes>Ghost
+
+--
++ Mode {Scatter, Chase, Debuff};
++Ghost(sf::RectangleShape body, sf::Vector2f startPosition);
++ update(sf::Time dt, sf::Vector2f playerPosition) override;
++ setMode(int state);
++ getMode() const;
++ setIsDead(bool state);
++ draw(sf::RenderWindow&amp; window);
++ getBounds();
+--
+- mode : Mode
+- moveOnGrid(map : Map) : void
+- chooseTarget(map : Map, p : Player) : sf::Vector2i  {abstract}
+--
+-isDead = false;
+-bool deathTimer = 0.f;
+-float deathTimeLimit = 20.f;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>806</x><y>988</y><w>273</w><h>247</h></coordinates><panel_attributes>Pinky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
++getPosition()
+--
++teleportIfReady();
+--
+(— brak własnych atrybutów —)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>429</x><y>988</y><w>273</w><h>247</h></coordinates><panel_attributes>Blinky
+
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
++getPosition()
+--
++teleportIfReady();
+--
+(— brak własnych atrybutów —)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>520</w><h>377</h></coordinates><panel_attributes>Map
+
+--
+ + draw(window : sf::RenderWindow&amp;) : void
+  + load(filename : std::string) : bool
+  + isWall(gridPos : sf::Vector2i) : bool
+  + isIntersection(gridPos : sf::Vector2i) : bool
+  + getPossibleDirections(gridPos : sf::Vector2i) : std::vector&lt;sf::Vector2i&gt;
+  + getCoinCount() : int
+  --
+  - layout      : std::vector&lt;std::string&gt;
+  - walls       : std::set&lt;sf::Vector2i&gt;
+  - coins       : std::set&lt;sf::Vector2i&gt;
+  - boosts      : std::set&lt;sf::Vector2i&gt;
+  - wallTexture : sf::Texture
+  - coinTexture : sf::Texture
+  - boostTexture: sf::Texture</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1118</x><y>377</y><w>351</w><h>468</h></coordinates><panel_attributes>Player ←
+
+--
++Player(sf::RectangleShape body, sf::Vector2f position);
++update(sf::Time dt, sf::Vector2f playerPosition) override;
++ handleInput(sf::Keyboard::Key&amp;);
++ setLives(int lives);
++ setScore(int score);
++getIsOffMap();
++setGodMode(bool state);
++setIsDead(bool state);
++setPosition(sf::Vector2f position);
++ getIsGod();
++ getIsDead();
++draw(sf::RenderWindow&amp; window);
++getPosition();
++ getBounds();
++getScore();
++ die();
+	
+--
+--  (brak metod chronionych/prywatnych)
+--
+- lives : int
+- score : int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1235</x><y>325</y><w>39</w><h>78</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>702</x><y>325</y><w>455</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>330;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>741</x><y>767</y><w>598</w><h>234</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;440;160</additional_attributes></element><element><id>Relation</id><coordinates><x>715</x><y>767</y><w>247</w><h>247</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;170;170</additional_attributes></element><element><id>Relation</id><coordinates><x>754</x><y>325</y><w>637</w><h>78</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>470;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>663</x><y>325</y><w>117</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;80;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>546</x><y>767</y><w>182</w><h>247</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;170</additional_attributes></element><element><id>Relation</id><coordinates><x>689</x><y>1157</y><w>143</w><h>39</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>507</x><y>273</y><w>104</w><h>351</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;60;250</additional_attributes></element><element><id>Relation</id><coordinates><x>923</x><y>481</y><w>221</w><h>143</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>507</x><y>208</y><w>130</w><h>39</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>52</x><y>806</y><w>273</w><h>247</h></coordinates><panel_attributes>Clyde
+--
++ chooseTarget(map : Map, p : Player) : sf::Vector2i
++getPosition()
+--
++teleportIfReady();
+--
+(— brak własnych atrybutów —)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>312</x><y>767</y><w>351</w><h>156</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>250;10;10;100</additional_attributes></element></diagram>
