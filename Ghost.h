@@ -8,7 +8,9 @@ class Ghost : public Entity{
 		void setMode(int state);
 		Mode getMode() const;
 		void setIsDead(bool state);
+		void setIsWaiting(bool state);
 		void draw(sf::RenderWindow& window);
+		void setPosition(sf::Vector2f position);
 		sf::FloatRect getBounds();
 
 	protected:
@@ -19,6 +21,9 @@ class Ghost : public Entity{
 	private: 
 		bool isDead = false;
 		bool deathTimer = 0.f;
-		float deathTimeLimit = 20.f;
-
+		float deathTimeLimit = 8.f;
+		bool isWaiting = false;
+		float isWaitingTimer = 0.f;
+		float waitTimeLimit = 10.f;
+	
 };
